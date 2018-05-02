@@ -4,12 +4,12 @@ public class BaseDeDatos {
 
     companion object {
 
-        val datos: ArrayList<Int> = ArrayList()
+        val datos: ArrayList<Usuario> = ArrayList()
 
-        fun recuperarPorIndice(indice: Int) : Int? {
-            for (indiceArreglo in datos.indices){
-                if (indiceArreglo == indice) {
-                    return datos[indiceArreglo]
+        fun recuperarPorNombreUsuario(nombreUsuario: String) : Usuario? {
+            for (usuario in datos){
+                if (usuario.nNombreUsuario.equals(nombreUsuario)) {
+                    return usuario
                 }
             }
             return null

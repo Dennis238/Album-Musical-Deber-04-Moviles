@@ -8,16 +8,16 @@ import java.util.Date;
 }
 
 
-class Cuenta (tipo:String, ultimaConexion: Date, numeroCancionesEscuchadas: Integer){
+class Cuenta (tipo:String, ultimaConexion: String, numeroCancionesEscuchadas: Int){
     var nTipo = tipo
     var nUltimaConexion = ultimaConexion
     var nNumeroCancionesEscuchadas = numeroCancionesEscuchadas
 
-    fun conexion (fecha:Date){
+    fun conexion (fecha:String){
             nUltimaConexion = fecha
         }
 
-     fun escucharCancion (cantidad : Integer){
+     fun escucharCancion (cantidad : Int){
         nNumeroCancionesEscuchadas = nNumeroCancionesEscuchadas
      }
 }
