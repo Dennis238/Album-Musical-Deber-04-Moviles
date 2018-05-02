@@ -7,7 +7,7 @@ public class BaseDeDatos {
         val datos: ArrayList<Int> = ArrayList()
 
         fun recuperarPorIndice(indice: Int) : Int? {
-            for (indiceArreglo in datos.indice){
+            for (indiceArreglo in datos.indices){
                 if (indiceArreglo == indice) {
                     return datos[indiceArreglo]
                 }
