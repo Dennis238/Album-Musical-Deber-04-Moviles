@@ -4,6 +4,26 @@ import java.time.LocalDateTime
 import java.util.*
 
 fun main(args: Array<String>){
+        var usuario = Usuario("Dennis Fernando", "Masculino", 21, "Dennis", "dennis238")
+        val cuenta = Cuenta("Premium",  LocalDateTime.now().toString(), 0)
+        usuario.crearCuenta(cuenta)
+
+        BaseDeDatos.datos.add(usuario)
+
+        var cancion = Cancion("Levels", "Avicii", "Electronica", "True")
+        var cancion2 = Cancion("Come as you are", "Nirvana", "Rock", "Nevermind")
+        var cancion3 = Cancion("Nuestro juramento", "Julio Jaramillo", "Pasillo", "20 Éxitos")
+        var cancion4 = Cancion("Uptown funk", "Bruno Mars", "Pop", "Uptown Special")
+        var cancion5 = Cancion("Do i wanna know", "Arctic Monkeys", "Rock", "AM")
+        BaseDeDatos2.datos2.add(cancion)
+        BaseDeDatos2.datos2.add(cancion2)
+        BaseDeDatos2.datos2.add(cancion3)
+        BaseDeDatos2.datos2.add(cancion4)
+        BaseDeDatos2.datos2.add(cancion5)
+
+
+
+
 
         println("\\\\\\\\\\\\\\\\Bienvenido a su Álbum de Música////////")
 
@@ -143,13 +163,19 @@ fun mostrarMenuMusical(usuario:Usuario) {
                         println("Ingrese el nombre por autor: ")
                         var nombreAutor = readLine()!!
                         var cancion = BaseDeDatos2.recuperarPorNombreAutor(nombreAutor)
-                        println("La canción buscada es: ${cancion.toString()}")
+                        println("La canción buscada es: \n\tNombre: ${cancion?.nNombre} \n" +
+                                "\tAutor: ${cancion?.nAutor}\n" +
+                                "\tGenero: ${cancion?.nGenero}\n" +
+                                "\tÁlbum: ${cancion?.nAlbum}")
                 }
                 2 -> {
                         println("Ingrese el nombre por nombre de Canción: ")
                         var nombreAutor = readLine()!!
                         var cancion = BaseDeDatos2.recuperarPorNombreCancion(nombreAutor)
-                        println("La canción buscada es: ${cancion.toString()}")
+                        println("La canción buscada es: \n\tNombre: ${cancion?.nNombre} \n" +
+                                "\tAutor: ${cancion?.nAutor}\n" +
+                                "\tGenero: ${cancion?.nGenero}\n" +
+                                "\tÁlbum: ${cancion?.nAlbum}")
                 }
                 3 -> {
                         println("¿Seguro desea eliminar su cuenta de Usuario?\n" +
@@ -172,17 +198,13 @@ fun mostrarMenuMusical(usuario:Usuario) {
                         mostrarMenuMusical(usuario)
                 }
                 else -> {
-                        mostrarMenuMusical(usuario)
+                        abrirMenuPrincipal()
                 }
         }
 }
 
 
-    /* Recuperar datos del array
-    BaseDeDatos.datos.add(66) //adiciona un item
-    BaseDeDatos.datos.add(23) //adiciona un item
-    BaseDeDatos.datos.add(55) //adiciona un item
 
-    println(BaseDeDatos.recuperarPorIndice(1)) //devuelve un item por indice
-     */
+
+
 
