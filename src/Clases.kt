@@ -33,3 +33,10 @@ class Usuario(nombre: String, genero: String, edad: Int, nombreUsuario: String, 
         existeCuenta = true
     }}
 
+class Cancion(nombre: String, autor: String, genero: String, album:String) {
+    var nNombre = nombre
+    var nAutor = autor
+    var nGenero = genero
+    var nAlbum = album
+}
+

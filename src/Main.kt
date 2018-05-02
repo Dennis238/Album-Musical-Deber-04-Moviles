@@ -1,5 +1,6 @@
 
 import jdk.nashorn.internal.objects.Global
+import java.time.LocalDateTime
 import java.util.*
 
 fun main(args: Array<String>){
@@ -41,7 +42,6 @@ fun creacionUsuario() {
         var edad = readLine()!!.toInt()
         val usuario = Usuario(nombre, genero, edad, nombreUsuario, contraseña)
         println("Usuario creado con éxito!")
-        var selection = readLine()!!.toInt()
 
         creacionCuenta(usuario)
         }
@@ -61,15 +61,17 @@ fun creacionUsuario() {
                                 "Deluxe"
                         }
                 }
-                println("\t2. Saldo Inicial: ")
-                var ultimaConexion = Global.getDate().toString()
+
+                var ultimaConexion = LocalDateTime.now().toString()
                 var numeroCancionesEscuchadas = 0
                 val cuenta = Cuenta(tipo,  ultimaConexion, numeroCancionesEscuchadas)
                 usuario.crearCuenta(cuenta)
                 BaseDeDatos.datos.add(usuario)
                 println("Cuenta creada exitosamente!")
+                mostrarMenuUsuario(usuario)
+
         }
-}
+
 
 fun ingresoUsuario() {
         println("Ingreso a su álbum de música\nIngrese:\n\t1. Nombre de Usuario: ")
@@ -78,44 +80,44 @@ fun ingresoUsuario() {
         var contraseña = readLine()!!
         var usuario = BaseDeDatos.recuperarPorNombreUsuario(nombreUsuario)
         if (usuario != null) {
-                if (usuario.nContraseña.equals(contrasena)) {
+                if (usuario.nContraseña.equals(contraseña)) {
                         mostrarMenuUsuario(usuario)
                 } else {
                         println("Contrasena Incorrecta! Verifique sus datos de ingreso.")
-                        ingresoCliente()
+                        ingresoUsuario()
                 }
         } else {
                 println("Cliente no registrado en el sistema")
-                mostrarMenuPrincipal()
+                abrirMenuPrincipal()
         }
 }
 fun mostrarMenuUsuario(usuario: Usuario) {
         if (usuario.existeCuenta) {
                 mostrarMenuMusical(usuario)
         } else {
-                println("No existe cuenta asociada al cliente")
-                println("Menu de Usuario\n\t1. Crear Cuenta\n\t2. Eliminar Cliente\n" +
+                println("No existe cuenta asociada al usuario")
+                println("Menu de Usuario\n\t1. Crear Cuenta\n\t2. Eliminar Usuario\n" +
                         "\t3. Salir")
                 var selection = readLine()!!.toInt()
                 when (selection) {
                         1 -> {
-                                creacionCuenta(cliente)
-                                mostrarMenuCliente(cliente)
+                                creacionCuenta(usuario)
+                                mostrarMenuUsuario(usuario)
                         }
                         2 -> {
                                 println("Seguro desea eliminar su usuario del sistema?\n" +
                                         "\t1. Si\t2. No")
                                 selection = readLine()!!.toInt()
                                 if (selection == 1) {
-                                        BaseDeDatos.datos.remove(cliente)
+                                        BaseDeDatos.datos.remove(usuario)
                                         println("Cliente eliminado correctamente!")
-                                        mostrarMenuPrincipal()
+                                        abrirMenuPrincipal()
                                 } else {
-                                        mostrarMenuCliente(cliente)
+                                        mostrarMenuUsuario(usuario)
                                 }
                         }
                         else -> {
-                                mostrarMenuPrincipal()
+                                abrirMenuPrincipal()
                         }
                 }
         }
@@ -128,15 +130,27 @@ fun mostrarMenuMusical(usuario:Usuario) {
         println("Última conexión: ${usuario.nCuenta.nUltimaConexion}")
         println("Nº de Canciones Escuchadas: ${usuario.nCuenta.nNumeroCancionesEscuchadas}")
 
-        usuario.nCuenta.conexion(Global.getDate().toString())
+        usuario.nCuenta.conexion(LocalDateTime.now().toString())
 
         println("Menú de opciones: \n\t1. Buscar canción por autor\n" +
-                "\t2. Buscar canción por género\n" +
+                "\t2. Buscar canción por su nombre\n" +
                 "\t3. Eliminar Usuario\n" +
                 "\t4. Salir")
         var selection = readLine()!!.toInt()
         when (selection) {
 
+                1 -> {
+                        println("Ingrese el nombre por autor: ")
+                        var nombreAutor = readLine()!!
+                        var cancion = BaseDeDatos2.recuperarPorNombreAutor(nombreAutor)
+                        println("La canción buscada es: ${cancion.toString()}")
+                }
+                2 -> {
+                        println("Ingrese el nombre por nombre de Canción: ")
+                        var nombreAutor = readLine()!!
+                        var cancion = BaseDeDatos2.recuperarPorNombreCancion(nombreAutor)
+                        println("La canción buscada es: ${cancion.toString()}")
+                }
                 3 -> {
                         println("¿Seguro desea eliminar su cuenta de Usuario?\n" +
                                 "\t1. Si\t2. No")
@@ -146,11 +160,11 @@ fun mostrarMenuMusical(usuario:Usuario) {
                                 println("Cuenta eliminada correctamente!")
                                 abrirMenuPrincipal()
                         }
-                }else{
-                mostrarMenuUsuario()
+                }else ->{
+                abrirMenuPrincipal()
                 }
         }
-        println("Desea realizar otra transaccion?\n" +
+        println("Desea hallar otra canción?\n" +
                 "\t1. Si\t2. No")
         selection = readLine()!!.toInt()
         when (selection) {
@@ -158,7 +172,7 @@ fun mostrarMenuMusical(usuario:Usuario) {
                         mostrarMenuMusical(usuario)
                 }
                 else -> {
-                        mostrarMenuMusical(Usuario()
+                        mostrarMenuMusical(usuario)
                 }
         }
 }
